@@ -21,7 +21,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning> {/* Add suppressHydrationWarning for theme handling */}
-      {/* Use cn to apply font variable and base classes */}
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
         {children}
       </body>
