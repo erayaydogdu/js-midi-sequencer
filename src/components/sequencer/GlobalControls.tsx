@@ -1,5 +1,5 @@
 
-import type React from 'react';
+import React, { useMemo } from 'react'; // Import useMemo
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -48,6 +48,9 @@ const GlobalControls: React.FC<GlobalControlsProps> = ({
     onSwingChange(value[0]);
   };
 
+  // Memoize the value array for the Slider
+  const swingValue = useMemo(() => [swing], [swing]);
+
 
   return (
     <div className="p-4 border-b border-border bg-card flex flex-wrap items-center justify-between gap-4 shadow-sm">
@@ -89,7 +92,7 @@ const GlobalControls: React.FC<GlobalControlsProps> = ({
              min={0}
              max={75} // Max swing usually around 75% for musical purposes
              step={1}
-             value={[swing]}
+             value={swingValue} // Use memoized value
              onValueChange={handleSwingSliderChange}
              className="w-full"
            />
