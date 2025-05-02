@@ -1,4 +1,6 @@
+
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme" // Import fontFamily
 
 export default {
     darkMode: ["class"],
@@ -9,6 +11,12 @@ export default {
   ],
   theme: {
   	extend: {
+       fontFamily: { // Add font family extension
+         sans: ["var(--font-sans)", ...fontFamily.sans],
+       },
+       gridTemplateColumns: { // Add custom grid template
+         '16': 'repeat(16, minmax(0, 1fr))',
+       },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -92,3 +100,4 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
