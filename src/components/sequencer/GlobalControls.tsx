@@ -48,7 +48,7 @@ const GlobalControls: React.FC<GlobalControlsProps> = ({
     onSwingChange(value[0]);
   };
 
-  // Memoize the value array for the Slider
+  // Memoize the value array for the Slider to prevent infinite loops
   const swingValue = useMemo(() => [swing], [swing]);
 
 
@@ -141,3 +141,4 @@ const GlobalControls: React.FC<GlobalControlsProps> = ({
 };
 
 export default GlobalControls;
+
