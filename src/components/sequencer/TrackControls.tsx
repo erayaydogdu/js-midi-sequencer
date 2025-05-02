@@ -1,5 +1,5 @@
 
-import type React from 'react';
+import React, { useMemo } from 'react'; // Import useMemo
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Button } from '@/components/ui/button';
@@ -30,7 +30,7 @@ const TrackControls: React.FC<TrackControlsProps> = ({
   onCopyTrack,
 }) => {
   const handleDeviceChange = (deviceId: string) => {
-    onTrackChange(track.id, { outputDeviceId: deviceId });
+    onTrackChange(track.id, { outputDeviceId: deviceId === 'none' ? undefined : deviceId });
   };
 
   const handleChannelChange = (channel: string) => {
@@ -44,6 +44,9 @@ const TrackControls: React.FC<TrackControlsProps> = ({
     const handleTransposeChange = (value: number[]) => {
     onTrackChange(track.id, { transpose: value[0] });
   };
+
+  // Memoize the transpose value array for the Slider
+  const transposeValue = useMemo(() => [track.transpose], [track.transpose]);
 
 
   return (
@@ -68,7 +71,7 @@ const TrackControls: React.FC<TrackControlsProps> = ({
         <div className="space-y-1">
           <Label htmlFor={`device-${track.id}`} className="text-sm font-medium text-muted-foreground">Output Device</Label>
           <Select
-            value={track.outputDeviceId || ''}
+            value={track.outputDeviceId || 'none'} // Use 'none' for the Select value when undefined
             onValueChange={handleDeviceChange}
           >
             <SelectTrigger id={`device-${track.id}`} className="w-full">
@@ -116,7 +119,7 @@ const TrackControls: React.FC<TrackControlsProps> = ({
             min={-12}
             max={12}
             step={1}
-            value={[track.transpose]}
+            value={transposeValue} // Use memoized value
             onValueChange={handleTransposeChange}
             className="w-full"
           />
