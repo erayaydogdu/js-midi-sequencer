@@ -42,8 +42,11 @@ const TrackControls: React.FC<TrackControlsProps> = ({
   };
 
     const handleTransposeChange = (value: number[]) => {
-    onTrackChange(track.id, { transpose: value[0] });
-  };
+      // Only update if the value actually changed to prevent infinite loops
+      if (value[0] !== track.transpose) {
+         onTrackChange(track.id, { transpose: value[0] });
+      }
+    };
 
   // Memoize the transpose value array for the Slider
   const transposeValue = useMemo(() => [track.transpose], [track.transpose]);

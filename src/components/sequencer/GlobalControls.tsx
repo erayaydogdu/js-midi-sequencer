@@ -45,7 +45,10 @@ const GlobalControls: React.FC<GlobalControlsProps> = ({
   };
 
   const handleSwingSliderChange = (value: number[]) => {
-    onSwingChange(value[0]);
+    // Only update if the value actually changed to prevent infinite loops
+    if (value[0] !== swing) {
+      onSwingChange(value[0]);
+    }
   };
 
   // Memoize the value array for the Slider to prevent infinite loops
