@@ -1,5 +1,6 @@
 {
   "name": "nextn",
+  "homepage" : "https://erayaydogdu.github.io/js-midi-sequencer",
   "version": "0.1.0",
   "private": true,
   "scripts": {
