@@ -10,8 +10,8 @@ const inter = Inter({ // Initialize Inter font
 });
 
 export const metadata: Metadata = {
-  title: 'StepSync Sequencer', // Update title
-  description: 'A 16-step multi-track MIDI sequencer built with Next.js', // Update description
+  title: 'Online MIDI Sequencer', // Update title
+  description: 'A 16-step multi-track MIDI sequencer work in browser', // Update description
 };
 
 export default function RootLayout({
