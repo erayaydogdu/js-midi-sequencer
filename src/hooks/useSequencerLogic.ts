@@ -595,9 +595,14 @@ export function useSequencerLogic() {
                    .sort(([keyA], [keyB]) => parseInt(keyA.replace('setup_track','')) - parseInt(keyB.replace('setup_track','')))
                    .map(([, value]) => value as number); // Map to CC numbers
 
+           // Filter out undefined values and convert back to an object to match the SequencerState type
+           const filteredAssignments: { [key: string]: number } = Object.fromEntries(
+               Object.entries(sanitizedAssignments).filter(([, value]) => typeof value === 'number')
+           ) as { [key: string]: number };
+
            return {
                ...prev,
-               midiAssignments: sanitizedAssignments,
+               midiAssignments: filteredAssignments,
                ledOrder: newLedOrder,
                trackSelectors: newTrackSelectors,
                midiLearnActive: false, // Turn off learn mode after saving
@@ -889,7 +894,7 @@ export function useSequencerLogic() {
                       step.id === prevState.selectedStepId ? { ...step, ...changes } : step
                     );
                     const updatedTrack = { ...track, steps: newSteps };
-                    const updatedPattern = { ...pattern, tracks: { ...pattern.tracks, [prevState.currentTrackId]: updatedTrack } };
+                    const updatedPattern = { ...pattern, tracks: { ...pattern.tracks, [prevState.currentPatternId]: updatedTrack } };
 
                     return {
                        ...prevState,
@@ -1083,10 +1088,13 @@ export function useSequencerLogic() {
                patterns: loadedState.patterns && Object.keys(loadedState.patterns).length > 0
                    ? loadedState.patterns
                    : defaultInitialState.patterns, // Fallback if patterns are missing/empty
+               // Sanitize and filter loaded midiAssignments to match the SequencerState type
                midiAssignments: Object.entries(loadedState.midiAssignments || {}).reduce((acc, [key, value]) => {
-                   acc[key as keyof MidiAssignments] = typeof value === 'number' ? value : undefined;
+                   if (typeof value === 'number') {
+                       acc[key] = value;
+                   }
                    return acc;
-               }, {} as MidiAssignments),
+               }, {} as { [key: string]: number }),
                ledOrder: Array.isArray(loadedState.ledOrder) ? loadedState.ledOrder.filter(n => typeof n === 'number') : [],
                trackSelectors: Array.isArray(loadedState.trackSelectors) ? loadedState.trackSelectors.filter(n => typeof n === 'number') : [],
            };
