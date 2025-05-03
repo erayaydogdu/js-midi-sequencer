@@ -2,7 +2,7 @@
 // Using `as any` for self because TypeScript's Worker typings can be tricky
 const ctx: Worker = self as any;
 
-let timerId: number | null = null;
+let timerId: ReturnType<typeof setTimeout> | null = null;
 let bpm = 120;
 let swing = 0; // 0-100, represents percentage delay for even steps
 let step = 0;
