@@ -2,7 +2,8 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  // output: 'export', // Uncomment for static export
+  output: 'export', // Static export for GitHub Pages
+  distDir: 'out', // Output directory for static export
   // basePath: '/js-midi-sequencer', // Add this line with your repository name
   // assetPrefix: '/js-midi-sequencer/', // Add this line to ensure correct asset paths
   reactStrictMode: true,
