@@ -35,7 +35,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps --legacy-peer-deps
 
       - name: Setup Pages
         id: setup_pages
