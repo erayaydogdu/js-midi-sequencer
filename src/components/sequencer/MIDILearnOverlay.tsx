@@ -87,11 +87,22 @@ const MIDILearnOverlay: React.FC<MIDILearnOverlayProps> = ({
 
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>, name: keyof MidiAssignments) => {
-    const value = e.target.value ? parseInt(e.target.value, 10) : undefined;
-     // Basic validation: Ensure it's a number between 0 and 127
-     if (value === undefined || (!isNaN(value) && value >= 0 && value <= 127)) {
-       setAssignments(prev => ({ ...prev, [name]: value }));
-     }
+    const inputValue = e.target.value;
+    // Allow empty string (clearing the field)
+    if (inputValue === '') {
+      setAssignments(prev => {
+        const newAssignments = { ...prev };
+        delete newAssignments[name];
+        return newAssignments;
+      });
+      return;
+    }
+    
+    const value = parseInt(inputValue, 10);
+    // Basic validation: Ensure it's a number between 0 and 127
+    if (!isNaN(value) && value >= 0 && value <= 127) {
+      setAssignments(prev => ({ ...prev, [name]: value }));
+    }
   };
 
     const handleFocus = (name: keyof MidiAssignments) => {
